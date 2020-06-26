@@ -1,15 +1,31 @@
 #main
 import VM as VM
+import OTA as OTA
 import cv2
 from picamera import PiCamera
 import time
-
-camera = PiCamera()
+import os
+import sys
+Version=2.0
 alarma=VM.alarmas()
+
+
+x=OTA.get_V()
+print(x)
+if(Version!=OTA.get_V()):
+    print("actualizado")
+    os.execl(sys.executable, sys.executable, *sys.argv)
+
+else:
+    print("Version correcta")
+camera = PiCamera()
 bordes=VM.iniciar(camera,alarma)
-img=VM.recorte(camera,bordes)
-cv2.imwrite("works.jpg",img)
+T=time.time()
 
+while time.time()-T<10:
+    img=VM.recorte(camera,bordes)
+    zonas=VM.zonas(img)
+    grafico=VM.graficos(zonas[2],"main")
+    VM.enviar_imagen(grafico)
 
-cv2.imshow("Game Boy Screen", img)
-cv2.waitKey(0)
+cv2.imwrite("salida.jpg",img)

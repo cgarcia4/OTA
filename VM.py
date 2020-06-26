@@ -1,4 +1,5 @@
 #Funciones Ventilador mecánico
+from __future__ import print_function
 import cv2
 import numpy as np
 import imutils
@@ -7,6 +8,8 @@ import io
 from gpiozero import LED
 import time
 
+import requests
+import json
 
 
 def iniciar(camera,alarma):
@@ -27,7 +30,7 @@ def iniciar(camera,alarma):
         
         gris = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #blanco y negro
         gauss = cv2.GaussianBlur(gris, (5,5), 0) #filtro para el ruido
-        ret,th = cv2.threshold(gauss,20,255,cv2.THRESH_BINARY)
+        ret,th = cv2.threshold(gauss,25,255,cv2.THRESH_BINARY)
         #cv2.imshow("",th)
         #cv2.waitKey(0)
         cnts = cv2.findContours(th, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) #busco los contornos de la imagen aplicado el treshold
@@ -86,7 +89,8 @@ def iniciar(camera,alarma):
                     #se corrige y extrae la pantalla, usando como input los puntos y distancias entre ellos
                 M = cv2.getPerspectiveTransform(rect, dst)
                 return [M,maxWidth,maxHeight]
-
+        enviar_imagen(img)  
+        
 def alarmas():
     normal= LED(22)
     cam = LED(27)
@@ -136,7 +140,7 @@ def zonas(recorte):
     return [zonamed,zonaalarm,zonagraf,zonamodo,zonatipog]
     
 
-def enviar_img(img, url= 'http://127.0.0.1:5000/VMPaciente/video'):
+def enviar_imagen(img, url= 'http://127.0.0.1:5000/VMPaciente/video'):
     content_type = 'output_1.jpg'
     headers = {'content-type': content_type}# prepare headers for http request
     _, img_encoded = cv2.imencode('.jpg', img)# encode image as jpeg

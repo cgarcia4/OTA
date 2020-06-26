@@ -1,22 +1,14 @@
-#Ota UPDATE
+#/home/pi/Desktop/Casptone/Entrega_3
 import os
 import sys
-import psutil
-import logging
+import subprocess
 
 def get_V():
-	f = open("Version.txt","r")
-	f = f.readline()
-	return(f.replace("\n",""))
-	
-
+    f = open("Version.txt","r")
+    f = f.readline()
+    return(f.replace("\n",""))
 
 def restart():
-	try:
-	   p = psutil.Process(os.getpid())
-	   for handler in p.get_open_files() + p.conections():
-		os.close(handler.fd)
-	except Exception, e:
-	   logging.error(e)
-	python = sys.executable
-	os.execl(python, python, *sys.argv) 
+    os.execl(sys.executable, sys.executable, *sys.argv)
+    return 0
+
