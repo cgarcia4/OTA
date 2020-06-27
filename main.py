@@ -6,26 +6,27 @@ from picamera import PiCamera
 import time
 import os
 import sys
-Version=2.0
+Version="1"
+Version_OTA=OTA.get_V()
+print(Version_OTA)
+
+
 alarma=VM.alarmas()
-
-
-x=OTA.get_V()
-print(x)
-if(Version!=OTA.get_V()):
-    print("actualizado")
-    os.execl(sys.executable, sys.executable, *sys.argv)
-
-else:
-    print("Version correcta")
-camera = PiCamera()
+camera = VM.camera()
 bordes=VM.iniciar(camera,alarma)
 T=time.time()
 
-while time.time()-T<10:
+while time.time()-T<100:
+    
+    if Version!=Version_OTA:
+        print ("amimir")
+        os.system('sudo shutdown -r now')
+    
     img=VM.recorte(camera,bordes)
+    cv2.imwrite("foto_isi_10.jpg",img)
     zonas=VM.zonas(img)
+    
     grafico=VM.graficos(zonas[2],"main")
-    VM.enviar_imagen(grafico)
+    VM.enviar_imagen(grafico,"https://capstonetest0.herokuapp.com/VMPaciente/video")
 
 cv2.imwrite("salida.jpg",img)

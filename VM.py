@@ -10,13 +10,17 @@ import time
 
 import requests
 import json
+a=PiCamera()
 
+def camera():
+    global a
+    return a
 
 def iniciar(camera,alarma):
     stram = io.BytesIO()
     aux=0
     while aux==0:
-        time.sleep(1)
+        
         estado(alarma,2) #indica que hay problemas con la camara, hasta calibrarla
         Bordes=True
         x_max=0
@@ -30,7 +34,7 @@ def iniciar(camera,alarma):
         
         gris = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #blanco y negro
         gauss = cv2.GaussianBlur(gris, (5,5), 0) #filtro para el ruido
-        ret,th = cv2.threshold(gauss,25,255,cv2.THRESH_BINARY)
+        ret,th = cv2.threshold(gauss,20,255,cv2.THRESH_BINARY)
         #cv2.imshow("",th)
         #cv2.waitKey(0)
         cnts = cv2.findContours(th, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE) #busco los contornos de la imagen aplicado el treshold
@@ -89,7 +93,7 @@ def iniciar(camera,alarma):
                     #se corrige y extrae la pantalla, usando como input los puntos y distancias entre ellos
                 M = cv2.getPerspectiveTransform(rect, dst)
                 return [M,maxWidth,maxHeight]
-        enviar_imagen(img)  
+        #enviar_imagen(img,"https://capstonetest0.herokuapp.com/VMPaciente/video")  
         
 def alarmas():
     normal= LED(22)
