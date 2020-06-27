@@ -6,7 +6,7 @@ from picamera import PiCamera
 import time
 import os
 import sys
-Version="1"
+Version="2"
 Version_OTA=OTA.get_V()
 print(Version_OTA)
 
