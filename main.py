@@ -9,7 +9,7 @@ import sys
 import datetime
 import numpy as np
 
-Version="1"
+Version="2"
 alarma=VM.alarmas()
 try:
     camara = VM.camera()
@@ -23,6 +23,9 @@ def main(camara,alarma,Version):
     Version_OTA=f.replace("\n","")
     
     while True:
+        f = open("Version.txt","r")
+        f = f.readline()
+        Version_OTA=f.replace("\n","")
 
         if Version!=Version_OTA:
             print ("amimir")
