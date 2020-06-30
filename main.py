@@ -54,6 +54,7 @@ def main(camara,alarma,Version,a):
             main(camara,alarma,Version,a)
         
         grafico=VM.graficos(zonas[2],"main")
+        grafico=cv2.resize(grafico, (600,400))
         mensaje=VM.mensaje_2(modo,A,M,Version,a)
         np.save('my_file.npy', mensaje)
         f = open ("estado.txt","w")
