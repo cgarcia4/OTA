@@ -202,13 +202,14 @@ def iniciar_2(camera,alarma):
                         #cv2.imshow("",th)
                         #cv2.waitKey(0)
                         return [M,maxWidth,maxHeight]
-            f = open ("estado.txt","w")
-            f.write("0")
-            f.close()
-            cv2.imwrite("grafico.jpg",img)
-            f = open ("estado.txt","w")
-            f.write("1")
-            f.close()
+        f = open ("estado.txt","w")
+        f.write("0")
+        f.close()
+        img = cv2.resize(img, (600,400))
+        cv2.imwrite("grafico.jpg",img)
+        f = open ("estado.txt","w")
+        f.write("1")
+        f.close()
             
             
 def alarmas():
@@ -491,7 +492,7 @@ def lector_variable(palabra):  #COMPARA CON LA BASE DE DATOS Y POR COINCIDENCIA 
     elif (matrix[10][10]==255) and (matrix[10][11]==255):
       var = ["FIO2","%"]
     else:
-      var=["Rate","bpm"]
+      var=["Rate","rpm"]
   elif l<55:
     var=["Total Ve","L"]
   elif l<61:  
@@ -613,7 +614,7 @@ def mensaje(modo,alarmas,mediciones):
         
     return mensaje
 
-def mensaje_2(modo,alarmas,mediciones,ver):
+def mensaje_2(modo,alarmas,mediciones,ver,x):
     mensaje={}
     fh_time=datetime.datetime.now()
     fh_s = fh_time.strftime("%Y-%b-%d %H:%M:%S.%f")
@@ -626,11 +627,12 @@ def mensaje_2(modo,alarmas,mediciones,ver):
         mensaje["al"+str(a)]=" "
         
     for a in range(0,len(mediciones)):
-        mensaje["med"+str(a+1)]=mediciones[a][0][0]+":"+mediciones[a][1]+mediciones[a][0][1]
+        mensaje["med"+str(a+1)]=mediciones[a][0][0]+":"+mediciones[a][1]+" "+mediciones[a][0][1]
     for a in range(len(mediciones),5):
         mensaje["med"+str(a)]=" "
         
     mensaje["version"]=ver
+    mensaje["contador"]=str(x)
     return mensaje
 
 
