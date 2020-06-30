@@ -60,7 +60,7 @@ def main(camara,alarma,Version,a):
         except:
             main(camara,alarma,Version,a)
         
-        grafico=VM.graficos(zonas[2],"main")
+        grafico=VM.graficos(zonas[2],modo_g)
         grafico=cv2.resize(grafico, (600,400))
         mensaje=VM.mensaje_2(modo,A,M,Version,a)
         np.save('my_file.npy', mensaje)
