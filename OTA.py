@@ -8,7 +8,4 @@ def get_V():
     f = f.readline()
     return(f.replace("\n",""))
 
-def restart():
-    os.execl(sys.executable, sys.executable, *sys.argv)
-    return 0
 
