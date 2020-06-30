@@ -9,7 +9,7 @@ import sys
 import datetime
 import numpy as np
 
-Version="2"
+Version="1"
 alarma=VM.alarmas()
 try:
     camara = VM.camera()
