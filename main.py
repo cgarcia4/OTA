@@ -9,7 +9,7 @@ import sys
 import datetime
 import numpy as np
 
-Version="2.1"
+Version="2.2"
 alarma=VM.alarmas()
 a = open("contador.txt","r")
 a = a.readline()
