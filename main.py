@@ -11,7 +11,13 @@ import numpy as np
 
 Version="2"
 alarma=VM.alarmas()
-a=1
+a = open("contador.txt","r")
+a = a.readline()
+a.replace("\n","")
+a=int(a)
+
+
+
 try:
     camara = VM.camera()
 except:
@@ -24,6 +30,7 @@ def main(camara,alarma,Version,a):
     Version_OTA=f.replace("\n","")
     
     while True:
+        print(a)
         f = open("Version.txt","r")
         f = f.readline()
         Version_OTA=f.replace("\n","")
@@ -63,6 +70,9 @@ def main(camara,alarma,Version,a):
         cv2.imwrite("grafico.jpg",grafico)
         f = open ("estado.txt","w")
         f.write("1")
+        f.close()
+        f = open ("contador.txt","w")
+        f.write(str(a))
         f.close()
         a=a+1
 
