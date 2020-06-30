@@ -9,7 +9,7 @@ import sys
 import datetime
 import numpy as np
 
-Version="1"
+Version="2"
 alarma=VM.alarmas()
 a=1
 try:
