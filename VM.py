@@ -283,13 +283,13 @@ def enviar_data(mensaje,url = 'http://127.0.0.1:5000/VMPaciente/mensajes'):
 
 
 def graficos(zonagraf,mode):
-    if mode=="trends":
+    if mode=="TRENDS":
         return zonagraf[0:385, 0:1040]
     
-    elif mode=="main":
+    elif mode=="MAIN":
         return zonagraf[0:680, 0:1040]
     
-    elif mode=="loops":  #debo corregirlo arriba después
+    elif mode=="LOOPS":  #debo corregirlo arriba después
         return zonagraf[0:650, 0:1040]
     
 def detector_circulos(zona_a):
