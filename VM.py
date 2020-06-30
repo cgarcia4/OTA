@@ -622,11 +622,11 @@ def mensaje_2(modo,alarmas,mediciones,ver):
     
     for a in range(0,len(alarmas)):
         mensaje["al"+str(a+1)]=alarmas[a]
-    for a in range(len(alarmas),7):
+    for a in range(len(alarmas)+1,7):
         mensaje["al"+str(a)]=" "
         
     for a in range(0,len(mediciones)):
-        mensaje["med"+str(a+1)]=mediciones[a]
+        mensaje["med"+str(a+1)]=mediciones[a][0]+"="+mediciones[a][1]
     for a in range(len(mediciones),5):
         mensaje["med"+str(a)]=" "
         
