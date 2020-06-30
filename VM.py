@@ -480,24 +480,24 @@ def lector_variable(palabra):  #COMPARA CON LA BASE DE DATOS Y POR COINCIDENCIA 
   l,a = (len(palabra[0])), (len(palabra))  # a=altura imagen (numero filas), l= largo horizontal (numero columnas)
   #PREPROCESAMIENTO
   if l<33:
-    var="Vti"
+    var=["Vti","ml"]
   elif l<40:
-    var="Vte"
+    var=["Vte","ml"]
   elif l<50: #puede ser FIO2 o Rate, asi que uso otro criterio
     th = cv2.threshold(palabra, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
     matrix= np.array(th) #matriz 2D del rectangulo
     if (matrix[15][3]==255) and (matrix[16][3]==255):
-      var = "Total Ve"
+      var = ["Total Ve", "L"]
     elif (matrix[10][10]==255) and (matrix[10][11]==255):
-      var = "FIO2"
+      var = ["FIO2","%"]
     else:
-      var="Rate"
+      var=["Rate","bpm"]
   elif l<55:
-    var="Total Ve"
+    var=["Total Ve","L"]
   elif l<61:  
-    var="Vti/Kg"
+    var=["Vti/Kg","mL/kg"]
   else:
-    var="Ppeak"
+    var=["Ppeak","cmH2O"]
   return (var)
 #### FUNCIÓN PRINCIPAL ##########
 def procesa_mediciones(imagen):
@@ -626,7 +626,7 @@ def mensaje_2(modo,alarmas,mediciones,ver):
         mensaje["al"+str(a)]=" "
         
     for a in range(0,len(mediciones)):
-        mensaje["med"+str(a+1)]=mediciones[a][0]+"="+mediciones[a][1]
+        mensaje["med"+str(a+1)]=mediciones[a][0][0]+":"+mediciones[a][1]+mediciones[a][0][1]
     for a in range(len(mediciones),5):
         mensaje["med"+str(a)]=" "
         
